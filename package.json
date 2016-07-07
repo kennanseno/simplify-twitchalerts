@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.9.2"
+  },
+  "dependencies": {
+    "materialize": "^1.0.0"
   }
 }

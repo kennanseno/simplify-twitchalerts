@@ -25,12 +25,7 @@ angular.module('mostPopularListingsApp.home', ['ngRoute'])
 
 
 	$scope.getAccessToken = function (code) {
-
-
-
 			$scope.simplifyTransactionSuccess = true;
-
-
 	};
 
 	$scope.twitchalerts = function  () {

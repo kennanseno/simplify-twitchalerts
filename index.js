@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 	res.send('Hello World!');
 });
 
-app.post('/pay', function(req, res) {
+app.get('/processTransaction', function(req, res) {
 	
 
 	client.payment.create({

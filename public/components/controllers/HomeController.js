@@ -19,17 +19,20 @@ angular.module('mostPopularListingsApp.home', ['ngRoute'])
 .controller('HomeController', ['$scope', '$location', '$http', function($scope, $location, $http) {
 
 
-	$scope.authCode = $location.search()['code'];
-	$scope.name = 'sdasdas';
-	$scope.show = true;
+	var authLink = 'https://www.twitchalerts.com/api/v1.0/authorize',
+		cientSecret = 'elgU6YVKa3HiXoMvlh7wYCjGZ3i6r3yFjKmyXNu1',
+		redirectUri= 'http://localhost:3000',
+		authCode = $location.search()['code'],
+		transaction = {};
 
 
-	$scope.getAccessToken = function (code) {
-			$scope.simplifyTransactionSuccess = true;
+
+	$scope.processSimplifyTransaction = function () {
+
 	};
 
-	$scope.twitchalerts = function  () {
-
+	$scope.processTwitchalerts = function  () {
+	
 	}
 
 }]);

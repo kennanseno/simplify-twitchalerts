@@ -2,12 +2,12 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
+var Simplify = require("simplify-commerce");
 
 var TwitchAlerts = {
-	client_id: 'qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG',
-	client_secret: 'elgU6YVKa3HiXoMvlh7wYCjGZ3i6r3yFjKmyXNu1'
-};
-var Simplify = require("simplify-commerce"),
+		client_id: 'qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG',
+		client_secret: 'elgU6YVKa3HiXoMvlh7wYCjGZ3i6r3yFjKmyXNu1'
+	},
 	client = Simplify.getClient({
 		publicKey: 'sbpb_MmVmOGUyNDgtNThjYy00MTZhLWI4YTMtNTIzMDVkZGE5Mjlh',
 		privateKey: 'Tw5A8JfQwsAk8b8KrohVCeBNLEWQR2QO4eq6AudJx295YFFQL0ODSXAOkNtXTToq'
@@ -51,8 +51,6 @@ app.get('/accessToken', function(req, res) {
 		redirect_uri: req.query.redirect_uri,
 		code: req.query.code
 	};
-
-	var request = require("request");
 
 	var options = {
 		method: 'POST',

@@ -1,8 +1,12 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var request = require('request');
 
-
+var TwitchAlerts = {
+	client_id: 'qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG',
+	client_secret: 'elgU6YVKa3HiXoMvlh7wYCjGZ3i6r3yFjKmyXNu1'
+};
 var Simplify = require("simplify-commerce"),
 	client = Simplify.getClient({
 		publicKey: 'sbpb_MmVmOGUyNDgtNThjYy00MTZhLWI4YTMtNTIzMDVkZGE5Mjlh',
@@ -13,7 +17,7 @@ app.use(bodyParser());
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-	res.send('Hello World!');
+
 });
 
 app.get('/processTransaction', function(req, res) {
@@ -39,8 +43,39 @@ app.get('/processTransaction', function(req, res) {
 	});
 });
 
-app.get('/getAuthCode', function(request, response) {
-	response.send('SUCCESS');
+app.get('/accessToken', function(req, res) {
+	var data = {
+		grant_type: req.query.grant_type,
+		client_id: TwitchAlerts.client_id,
+		client_secret: TwitchAlerts.client_secret,
+		redirect_uri: req.query.redirect_uri,
+		code: req.query.code
+	};
+
+	var request = require("request");
+
+	var options = {
+		method: 'POST',
+		url: 'https://www.twitchalerts.com/api/v1.0/token',
+		headers:
+		{ 	'content-type': 'application/x-www-form-urlencoded',
+			'cache-control': 'no-cache' },
+		form:
+		{ grant_type: data.grant_type,
+			client_id: data.client_id,
+			client_secret: data.client_secret,
+			redirect_uri: data.redirect_uri,
+			code: data.code
+		}
+	};
+
+	request(options, function (error, response, body) {
+		if (error){
+			res.send(error);
+			throw new Error(error);
+		}
+		res.send(body);
+	});
 });
 
 app.listen(3000, function () {

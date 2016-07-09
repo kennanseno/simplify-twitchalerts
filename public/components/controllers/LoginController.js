@@ -5,7 +5,7 @@
 
 'use strict';
 
-angular.module('mostPopularListingsApp.login', ['ngRoute'])
+angular.module('mostPopularListingsApp.login', ['ngRoute', 'ngMaterial'])
 
 // Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){

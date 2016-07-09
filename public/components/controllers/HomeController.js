@@ -33,7 +33,7 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 	};
 
 	$scope.twitchalerts = function  (t) {
-
+		console.log(t);
 	}
 
 }]);

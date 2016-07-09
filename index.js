@@ -39,6 +39,10 @@ app.get('/processTransaction', function(req, res) {
 	});
 });
 
+app.get('/getAuthCode', function(request, response) {
+	response.send('SUCCESS');
+});
+
 app.listen(3000, function () {
 	console.log('Example app listening on port 3000!');
 });

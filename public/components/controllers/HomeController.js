@@ -17,10 +17,7 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 
 // Controller definition for this module
 .controller('HomeController', ['$scope', '$location', '$http', function($scope, $location, $http) {
-	var twitchalerts = {
-			url: 'https://www.twitchalerts.com/api/v1.0',
-			redirectUri: 'http://localhost:3000'
-		};
+
 	$scope.transaction = {};
 
 
@@ -28,6 +25,10 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
     /**
 	 * TWITCHALERTS FUNCTIONALITY
      */
+	var twitchalerts = {
+		url: 'https://www.twitchalerts.com/api/v1.0',
+		redirectUri: 'http://localhost:3000'
+	};
 	$scope.donation = {};
 	$scope.authCode = $location.search()['code'];
 	$scope.authLink = twitchalerts.url + '/authorize?' +
@@ -61,7 +62,7 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 	});
 
 	/**
-	 * process twitchalerts donation
+	 * Process twitchalerts donation
 	 * @param donation
      */
 	$scope.donate = function(donation) {
@@ -77,10 +78,29 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 				message: donation.message
 			}
 		}).then(function success(response) {
-			console.log(response.data);
+			console.log('Donation succeeded: ', JSON.stringify(response.data));
+			refreshUsedToken($scope.transaction.token.refresh_token);
+		});
+	};
+
+	/**
+	 * Function to request new token once existing one is used
+	 * @param refreshToken
+     */
+	function refreshUsedToken(refreshToken) {
+		$http({
+			url: '/getNewToken',
+			method: 'GET',
+			params: {
+				grant_type: 'refresh_token',
+				redirect_uri: twitchalerts.redirectUri,
+				refresh_token: refreshToken
+			}
+		}).then(function success(response) {
+			$scope.transaction.token = response.data;
+			console.log('New token generated: ' + $scope.transaction.token.access_token);
 		});
 	}
-
 }]);
 
 

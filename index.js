@@ -98,6 +98,33 @@ app.get('/processDonation',function(req, res) {
 	});
 });
 
+app.get('/getNewToken', function(req, res) {
+	var data = {
+		grant_type: req.query.grant_type,
+		client_id: TwitchAlerts.client_id,
+		client_secret: TwitchAlerts.client_secret,
+		redirect_uri: req.query.redirect_uri,
+		refresh_token: req.query.refresh_token
+	};
+
+	var options = {
+		method: 'POST',
+		url: 'https://www.twitchalerts.com/api/v1.0/token',
+		headers:
+		{ 	'content-type': 'application/x-www-form-urlencoded',
+			'cache-control': 'no-cache' },
+		form: data
+	};
+
+	request(options, function (error, response, body) {
+		if (error){
+			res.send(error);
+			throw new Error(error);
+		}
+		res.send(body);
+	});
+});
+
 app.listen(3000, function () {
 	console.log('Example app listening on port 3000!');
 });

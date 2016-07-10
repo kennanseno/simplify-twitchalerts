@@ -51,21 +51,25 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 						code: authValue
 					}
 				}).then(function success(response) {
-					$scope.transaction.accessToken = response.data.access_token;
-					if(angular.isDefined($scope.transaction.accessToken)){
-						console.log('Twitchalerts token: ' + $scope.transaction.accessToken);
+					$scope.transaction.token = response.data;
+					if(angular.isDefined($scope.transaction.token.access_token)){
+						console.log('Twitchalerts token: ' + $scope.transaction.token.access_token);
 						$scope.showDonationPanel = true;
 					}
 				});
 			}
 	});
 
+	/**
+	 * process twitchalerts donation
+	 * @param donation
+     */
 	$scope.donate = function(donation) {
 		$http({
 			url: '/processDonation',
 			method: 'GET',
 			params: {
-				access_token: $scope.transaction.accessToken,
+				access_token: $scope.transaction.token.access_token,
 				name: donation.name,
 				identifier: donation.email,
 				amount: donation.amount,

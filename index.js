@@ -58,13 +58,35 @@ app.get('/accessToken', function(req, res) {
 		headers:
 		{ 	'content-type': 'application/x-www-form-urlencoded',
 			'cache-control': 'no-cache' },
-		form:
-		{ grant_type: data.grant_type,
-			client_id: data.client_id,
-			client_secret: data.client_secret,
-			redirect_uri: data.redirect_uri,
-			code: data.code
+		form: data
+	};
+
+	request(options, function (error, response, body) {
+		if (error){
+			res.send(error);
+			throw new Error(error);
 		}
+		res.send(body);
+	});
+});
+
+app.get('/processDonation',function(req, res) {
+	var data = {
+		access_token: req.query.access_token,
+		name: req.query.name,
+		identifier: req.query.identifier,
+		amount: req.query.amount,
+		currency: req.query.currency,
+		message: req.query.message
+	};
+
+	var options = {
+		method: 'POST',
+		url: 'https://www.twitchalerts.com/api/v1.0/donations',
+		headers:
+		{ 	'content-type': 'application/x-www-form-urlencoded',
+			'cache-control': 'no-cache' },
+		form: data
 	};
 
 	request(options, function (error, response, body) {

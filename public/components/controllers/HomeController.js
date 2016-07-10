@@ -59,6 +59,24 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 				});
 			}
 	});
+
+	$scope.donate = function(donation) {
+		$http({
+			url: '/processDonation',
+			method: 'GET',
+			params: {
+				access_token: $scope.transaction.accessToken,
+				name: donation.name,
+				identifier: donation.email,
+				amount: donation.amount,
+				currency: 'USD',
+				message: donation.message
+			}
+		}).then(function success(response) {
+			console.log(response.data);
+		});
+	}
+
 }]);
 
 

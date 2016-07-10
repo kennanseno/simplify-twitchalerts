@@ -1,19 +1,21 @@
 <div layout="column">
-	<section  layout-wrap>
+	<section layout-wrap>
 		<md-button ng-click="getAccessToken()" class="md-raised md-primary" href="{{authLink}}">Get Auth Code</md-button>
 	</section>
 </div>
-<div ng-if="showDonationPanel == true" layout="column" ng-cloak class="md-inline-form">
-	<md-content layout-gt-sm="row" layout-padding>
-		<div>
-			<md-input-container>
-				<label>Name</label>
-				<input ng-model="donation.name">
-			</md-input-container>
-			<md-input-container>
-				<label>Email</label>
-				<input ng-model="user.email" type="email">
-			</md-input-container>
-		</div>
-	</md-content>
+<div ng-if="showDonationPanel" layout="column" ng-cloak class="md-inline-form">
+	<form novalidate>
+		Name:<br>
+		<input type="text" ng-model="donation.name"><br>
+		Email address:<br>
+		<input type="text" ng-model="donation.email">
+		Amount:<br>
+		<input type="text" ng-model="donation.amount"><br>
+		Message:<br>
+		<input type="text" ng-model="donation.message">
+		<br><br>
+		<section layout-wrap>
+			<md-button ng-click="donate(donation)" class="md-raised md-primary">Donate</md-button>
+		</section>
+	</form>
 </div>

@@ -1,8 +1,3 @@
-// HomeController.js
-// For distribution, all controllers
-// are concatanated into single app.js file
-// by using Gulp
-
 'use strict';
 
 angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
@@ -16,9 +11,12 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 }])
 
 // Controller definition for this module
-.controller('HomeController', ['$scope', '$location', '$http', function($scope, $location, $http) {
+.controller('HomeController', ['$scope', '$location', '$http', '$window', function($scope, $location, $http, $window) {
 
 	$scope.transaction = {};
+
+
+
 
 
 
@@ -38,39 +36,57 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 		              'scope=donations.create';
 
 	/**
+	 * Process twitchalerts donation
+	 * @param donation
+	 */
+	$scope.donate = function(donation) {
+		if(angular.isDefined($scope.authCode)) {
+			processDonation(donation, $scope.transaction.token);
+		}else {
+			$window.location.href = $scope.authLink;
+		}
+	};
+
+	/**
 	 * Wait for Auth code then get access token
 	 */
 	$scope.$watch(function() { return $scope.authCode; },
 		function(authValue) {
 			if(angular.isDefined(authValue)) {
-				$http({
-					url: '/accessToken',
-					method: 'GET',
-					params: {
-						grant_type: 'authorization_code',
-						redirect_uri: twitchalerts.redirectUri,
-						code: authValue
-					}
-				}).then(function success(response) {
-					$scope.transaction.token = response.data;
-					if(angular.isDefined($scope.transaction.token.access_token)){
-						console.log('Twitchalerts token: ' + $scope.transaction.token.access_token);
-						$scope.showDonationPanel = true;
-					}
-				});
+				requestToken($scope.authCode);
 			}
 	});
 
 	/**
-	 * Process twitchalerts donation
-	 * @param donation
+	 * Function to request token
+	 * @param authValue
      */
-	$scope.donate = function(donation) {
+	function requestToken(authValue) {
+		$http({
+			url: '/accessToken',
+			method: 'GET',
+			params: {
+				grant_type: 'authorization_code',
+				redirect_uri: twitchalerts.redirectUri,
+				code: authValue
+			}
+		}).then(function success(response) {
+			$scope.transaction.token = response.data;
+			console.log('Twitchalerts token: ' + $scope.transaction.token.access_token);
+		});
+	}
+
+	/**
+	 * Function to process donation
+	 * @param donation
+	 * @param token
+     */
+	function processDonation(donation, token) {
 		$http({
 			url: '/processDonation',
 			method: 'GET',
 			params: {
-				access_token: $scope.transaction.token.access_token,
+				access_token: token.access_token,
 				name: donation.name,
 				identifier: donation.email,
 				amount: donation.amount,
@@ -79,9 +95,9 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 			}
 		}).then(function success(response) {
 			console.log('Donation succeeded: ', JSON.stringify(response.data));
-			refreshUsedToken($scope.transaction.token.refresh_token);
+			refreshUsedToken(token.refresh_token);
 		});
-	};
+	}
 
 	/**
 	 * Function to request new token once existing one is used

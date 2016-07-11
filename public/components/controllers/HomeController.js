@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
+angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCookies'])
 
 // Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){
@@ -11,14 +11,16 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 }])
 
 // Controller definition for this module
-.controller('HomeController', ['$scope', '$location', '$http', '$window', function($scope, $location, $http, $window) {
+.controller('HomeController', ['$scope', '$location', '$http', '$window', '$cookies', function($scope, $location, $http, $window, $cookies) {
 
 	$scope.transaction = {};
+	var secret_token = $cookies.get('secret_token');
 
-
-
-
-
+	function init() {
+		if(angular.isDefined(secret_token)){
+			refreshUsedToken(secret_token);
+		}
+	}
 
     /**
 	 * TWITCHALERTS FUNCTIONALITY
@@ -40,10 +42,10 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 	 * @param donation
 	 */
 	$scope.donate = function(donation) {
-		if(angular.isDefined($scope.authCode)) {
-			processDonation(donation, $scope.transaction.token);
-		}else {
+		if(!angular.isDefined($scope.authCode) && !angular.isDefined(secret_token)) {
 			$window.location.href = $scope.authLink;
+		}else {
+			processDonation(donation, $scope.transaction.token);
 		}
 	};
 
@@ -115,8 +117,15 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 		}).then(function success(response) {
 			$scope.transaction.token = response.data;
 			console.log('New token generated: ' + $scope.transaction.token.access_token);
+
+			//Create token so as to remove auth process on the donation process
+			var date = new Date();
+			var exp = new Date(date.getFullYear(), date.getMonth()+6, date.getDate());
+			$cookies.put('secret_token', $scope.transaction.token.refresh_token, {expires: exp} );
 		});
 	}
+
+	init();
 }]);
 
 

@@ -25,6 +25,34 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 
 
 
+
+
+
+//Issue here, how its being passed. Simplify wanted strings
+//between being passed in here and caught in index
+
+	$scope.processSimplifyTxns = function(transaction) {
+		console.log(transaction);
+		$http({
+			url: '/processSimplify',
+			method: 'GET',
+			params: {
+				amount: 19,
+				cardnumber: transaction.cardnumber,
+				expMonth: transaction.expmonth,
+				expYear: transaction.expyear,
+				currency: 'USD',
+				cvc: transaction.cvc
+			}
+		}).then(function success(response) {
+			console.log(response.data);
+		});
+	}
+
+
+
+
+
     /**
 	 * TWITCHALERTS FUNCTIONALITY
      */

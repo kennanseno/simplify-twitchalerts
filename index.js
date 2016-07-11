@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -19,29 +21,68 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
 
 });
+ 
 
-app.get('/processTransaction', function(req, res) {
-	
+// 	client.payment.create({
+// 		amount : req.body.amount,
+// 		description : "payment description",
+// 		token: req.body.simplifyToken
+// 	}, function(errData, data){
+
+// 		if(errData){
+// 			console.error("Error Message: " + errData.data.error.message);
+
+// 			res.send("Payment Status: " + JSON.stringify(errData));
+//         // handle the error
+//         return;
+//     }
+
+
+//     console.log("Payment Status: " + data.paymentStatus);
+
+//     res.send("Payment Status: " + data.paymentStatus);
+// 	});
+// });
+
+//below is what the above block was changed to, removal of the token block
+
+
+
+
+app.get('/processSimplify', function(req, res) {
+		
+
+	console.log(req.query.amount);	
+	console.log(req.query.expMonth);
+	console.log(req.query.expYear);
+	console.log(req.query.cvc);
+	console.log(req.query.cardnumber);
+	console.log(req.query.currency);
 
 	client.payment.create({
-		amount : req.body.amount,
-		description : "payment description",
-		token: req.body.simplifyToken
-	}, function(errData, data){
+	    amount : "19",
+	    description : "payment description",
+	    card : {
+	       expMonth : "11",
+	       expYear : "20",
+	       cvc : "123",
+	       number : "555555555554444"
+	    },
+	    currency : 'USD'
+	},
 
-		if(errData){
-			console.error("Error Message: " + errData.data.error.message);
+		function(errData, data){
 
-			res.send("Payment Status: " + JSON.stringify(errData));
-        // handle the error
-        return;
-    }
-
-    console.log("Payment Status: " + data.paymentStatus);
-
-    res.send("Payment Status: " + data.paymentStatus);
+	    if(errData){
+	        console.error("Error Message: " + errData.data.error.message);
+	        // handle the error
+	        return;
+	    }
+	    console.log("Payment Status: " + data.paymentStatus);
 	});
+
 });
+
 
 app.get('/accessToken', function(req, res) {
 	var data = {

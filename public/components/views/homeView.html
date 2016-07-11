@@ -3,7 +3,7 @@
 		<md-button ng-click="getAccessToken()" class="md-raised md-primary" href="{{authLink}}">Get Auth Code</md-button>
 	</section>
 </div>
-<div ng-if="showDonationPanel" layout="column" ng-cloak class="md-inline-form">
+<div layout="column" ng-cloak class="md-inline-form">
 	<form novalidate>
 		Name:<br>
 		<input type="text" ng-model="donation.name"><br>
@@ -14,8 +14,23 @@
 		Message:<br>
 		<input type="text" ng-model="donation.message">
 		<br><br>
+
+		
+		Card Number:<br>
+		<input type="text" ng-model="transaction.cardnumber">
+		expMonth:<br>
+		<input type="text" ng-model="transaction.expmonth"><br>
+		expYear:<br>
+		<input type="text" ng-model="transaction.expyear">
+		CVC:<br>
+		<input type="text" ng-model="transaction.cvc">
+		<br><br>
+
+
+
+
 		<section layout-wrap>
-			<md-button ng-click="donate(donation)" class="md-raised md-primary">Donate</md-button>
+			<md-button ng-click="processSimplifyTxns(transaction)" class="md-raised md-primary">Process Transaction</md-button>
 		</section>
 	</form>
 </div>

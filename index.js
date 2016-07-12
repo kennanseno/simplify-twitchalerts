@@ -48,38 +48,50 @@ app.get('/', function (req, res) {
 
 
 
-
 app.get('/processSimplify', function(req, res) {
-		
+	var sdata = {
+	    amount : req.query.amount,
+	    description : req.query.description,
+	    card : {
+	       expMonth : req.query.expMonth,
+	       expYear : req.query.expYear,
+	       cvc : req.query.cvc,
+	       number : req.query.cardnumber
+	    },
+	    currency : 'USD'
+	}
 
-	console.log(req.query.amount);	
-	console.log(req.query.expMonth);
-	console.log(req.query.expYear);
-	console.log(req.query.cvc);
-	console.log(req.query.cardnumber);
-	console.log(req.query.currency);
-
-	client.payment.create({
-	    amount : "19",
+	var sdata = {
+	    amount : "123123",
 	    description : "payment description",
 	    card : {
 	       expMonth : "11",
-	       expYear : "20",
+	       expYear : "19",
 	       cvc : "123",
-	       number : "555555555554444"
+	       number : "5555555555554444"
 	    },
 	    currency : 'USD'
-	},
+	}
 
-		function(errData, data){
 
-	    if(errData){
-	        console.error("Error Message: " + errData.data.error.message);
-	        // handle the error
-	        return;
-	    }
-	    console.log("Payment Status: " + data.paymentStatus);
-	});
+	console.log(sdata);
+
+	// console.log(req.query.amount);	
+	// console.log(req.query.expMonth);
+	// console.log(req.query.expYear);
+	// console.log(req.query.cvc);
+	// console.log(req.query.cardnumber);
+	// console.log(req.query.currency);
+	// console.log(req.query.description);
+
+client.payment.create(sdata, function(errData, data){
+    if(errData){
+        console.error("Error Message: " + errData.data.error.message);
+        // handle the error
+        return;
+    }
+    console.log("Payment Status: " + data.paymentStatus);
+});
 
 });
 

@@ -26,8 +26,6 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 
 
 
-
-
 //Issue here, how its being passed. Simplify wanted strings
 //between being passed in here and caught in index
 
@@ -37,12 +35,15 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial'])
 			url: '/processSimplify',
 			method: 'GET',
 			params: {
-				amount: 19,
+				amount: "19",
+				description : "payment description",
 				cardnumber: transaction.cardnumber,
-				expMonth: transaction.expmonth,
-				expYear: transaction.expyear,
+				expMonth: transaction.expMonth,
+				expYear: transaction.expYear,
+				cvc: transaction.cvc,
 				currency: 'USD',
-				cvc: transaction.cvc
+				
+
 			}
 		}).then(function success(response) {
 			console.log(response.data);

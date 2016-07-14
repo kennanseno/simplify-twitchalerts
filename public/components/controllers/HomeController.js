@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCookies', 'ngMessages'])
+angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCookies', 'ngMessages', 'ui.materialize'])
 
 // Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){
@@ -26,7 +26,7 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCooki
 		'client_id=qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG&' +
 		'redirect_uri=' + twitchalerts.redirectUri + '&' +
 		'scope=donations.create';
-
+	
 	/**
 	 * Initialize App
 	 */

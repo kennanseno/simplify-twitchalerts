@@ -5,8 +5,8 @@ var request = require('request');
 var Simplify = require("simplify-commerce");
 
 var TwitchAlerts = {
-		client_id: 'qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG',
-		client_secret: 'elgU6YVKa3HiXoMvlh7wYCjGZ3i6r3yFjKmyXNu1'
+		client_id: 'yN6soTt3oyZCmqAyz5ulogTkUcvsDkQUJi875ht8',
+		client_secret: 'm2dI3MVrDWw3ptaTa5gUBmtDekpqzO7A6ziVqJNd'
 	},
 	client = Simplify.getClient({
 		publicKey: 'sbpb_MmVmOGUyNDgtNThjYy00MTZhLWI4YTMtNTIzMDVkZGE5Mjlh',

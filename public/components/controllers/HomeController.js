@@ -45,7 +45,8 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 		if(angular.isDefined(secret_token)){
 			refreshUsedToken(secret_token);
 		}
-		if(!angular.isDefined($scope.authCode) && !angular.isDefined(secret_token)) {
+		if((!angular.isDefined($scope.authCode) && !angular.isDefined(secret_token))) {
+			console.log($scope.authCode);
 			$window.location.href = $scope.authLink;
 		}
 	}

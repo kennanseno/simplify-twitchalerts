@@ -21,13 +21,20 @@ app.get('/', function (req, res) {
 });
 
 app.get('/processTransaction', function(req, res) {
-	
 
-	client.payment.create({
-		amount : req.body.amount,
-		description : "payment description",
-		token: req.body.simplifyToken
-	}, function(errData, data){
+	var transaction_data = {
+		amount : req.query.amount,
+		description : req.query.description,
+		card : {
+			expMonth : req.query.expMonth,
+			expYear : req.query.expYear,
+			cvc: req.query.cvc,
+			number : req.query.number
+		},
+		currency : req.query.currency
+	};
+
+	client.payment.create(transaction_data, function(errData, data){
 
 		if(errData){
 			console.error("Error Message: " + errData.data.error.message);
@@ -39,7 +46,7 @@ app.get('/processTransaction', function(req, res) {
 
     console.log("Payment Status: " + data.paymentStatus);
 
-    res.send("Payment Status: " + data.paymentStatus);
+    res.send(data.paymentStatus);
 	});
 });
 

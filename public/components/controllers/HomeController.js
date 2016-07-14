@@ -13,41 +13,42 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCooki
 // Controller definition for this module
 .controller('HomeController', ['$scope', '$location', '$http', '$window', '$cookies', function($scope, $location, $http, $window, $cookies) {
 
-	$scope.transaction = {};
 	var secret_token = $cookies.get('secret_token');
-
-	function init() {
-		if(angular.isDefined(secret_token)){
-			refreshUsedToken(secret_token);
-		}
-	}
-
-    /**
-	 * TWITCHALERTS FUNCTIONALITY
-     */
 	var twitchalerts = {
 		url: 'https://www.twitchalerts.com/api/v1.0',
 		redirectUri: 'http://localhost:3000'
 	};
 	$scope.donation = {};
+	$scope.transaction = {};
 	$scope.authCode = $location.search()['code'];
 	$scope.authLink = twitchalerts.url + '/authorize?' +
-		              'response_type=code&' +
-	 				  'client_id=qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG&' +
-		              'redirect_uri=' + twitchalerts.redirectUri + '&' +
-		              'scope=donations.create';
+		'response_type=code&' +
+		'client_id=qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG&' +
+		'redirect_uri=' + twitchalerts.redirectUri + '&' +
+		'scope=donations.create';
+
+
 
 	/**
+	 * Initialize App
+	 */
+	function init() {
+		if(angular.isDefined(secret_token)){
+			refreshUsedToken(secret_token);
+		}
+		if(!angular.isDefined($scope.authCode) && !angular.isDefined(secret_token)) {
+			$window.location.href = $scope.authLink;
+		}
+	}
+
+	init();
+
+	/**
+	 * TWITCHALERTS FUNCTIONALITY
+	 *
 	 * Process twitchalerts donation
 	 * @param donation
 	 */
-	$scope.donate = function(donation) {
-		if(!angular.isDefined($scope.authCode) && !angular.isDefined(secret_token)) {
-			$window.location.href = $scope.authLink;
-		}else {
-			processDonation(donation, $scope.transaction.token);
-		}
-	};
 
 	/**
 	 * Wait for Auth code then get access token
@@ -125,7 +126,30 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCooki
 		});
 	}
 
-	init();
+	/**
+	 * Function to process Simplify Transaction
+	 * @param transaction
+	 */
+	$scope.processSimplifyTransaction= function(transaction, donation_data) {
+		$http({
+			url: '/processTransaction',
+			method: 'GET',
+			params: {
+				amount: parseInt(donation_data.amount) * 100,
+				description : "Twitch Donation",
+				number: transaction.number,
+				expMonth: transaction.expMonth,
+				expYear: transaction.expYear,
+				cvc: transaction.cvc,
+				currency: 'USD'
+			}
+		}).then(function success(response) {
+			console.log('Payment status: ' + response.data);
+			if(response.data == 'APPROVED'){
+				processDonation(donation_data, $scope.transaction.token);
+			}
+		});
+	};
 }]);
 
 

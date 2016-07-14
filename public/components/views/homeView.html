@@ -1,5 +1,15 @@
 <div layout="column" ng-cloak class="md-inline-form">
 	<form novalidate>
+		Card Number:<br>
+		<input type="text" ng-model="transaction.number">
+		expMonth:<br>
+		<input type="text" ng-model="transaction.expMonth"><br>
+		expYear:<br>
+		<input type="text" ng-model="transaction.expYear">
+		CVC:<br>
+		<input type="text" ng-model="transaction.cvc">
+		<br><br>
+
 		Name:<br>
 		<input type="text" ng-model="donation.name"><br>
 		Email address:<br>
@@ -10,7 +20,7 @@
 		<input type="text" ng-model="donation.message">
 		<br><br>
 		<section layout-wrap>
-			<md-button ng-click="donate(donation)" class="md-raised md-primary">Donate</md-button>
+			<md-button ng-click="processSimplifyTransaction(transaction, donation)" class="md-raised md-primary">Donate</md-button>
 		</section>
 	</form>
 </div>

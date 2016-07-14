@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCookies'])
+angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCookies', 'ngMessages'])
 
 // Routing configuration for this module
 .config(['$routeProvider',function($routeprovider){

@@ -1,41 +1,61 @@
 <div layout="column" ng-cloak class="md-inline-form">
-	<div input-field>
-		<label>Card Number</label>
-		<input type="text" ng-model="transaction.number" length="150">
-		<a  class="btn col s4 offset-s4 l2 offset-l1" > Bottom</a>
-</div>
-	<input-field>
-		<label>Expiry Month</label>
-		<input type="text" ng-model="transaction.expMonth" length="2" ng-minlength="2" maxlength="2">
-	</input-field>
-	<input-field>
-		<label>Expiry Year</label>
-		<input type="text" ng-model="transaction.expYear" length="2" ng-minlength="2" maxlength="2">
-	</input-field>
-	<input-field>
-		<label>CVC</label>
-		<input type="text" ng-model="transaction.cvc" length="150">
-	</input-field>
+	<div class="row">
+		<form class="col s12">
+			<!-- Simplify Transaction-->
+			<div class="col s12 section">
+				<h5>Card Details</h5>
+			</div>
+			<div class="row">
+				<div input-field class="col s10">
+					<label>Card Number</label>
+					<input type="text" ng-model="transaction.number" length="16">
+				</div>
+			</div>
+			<div class="row">
+				<div input-field class="col s3">
+					<label>Expiry Month</label>
+					<input name="expMonth" type="text" ng-model="transaction.expMonth" length="2" ng-minlength="2" maxlength="2">
+				</div>
+				<div input-field class="col s3">
+					<label>Expiry Year</label>
+					<input type="text" ng-model="transaction.expYear" length="2" ng-minlength="2" maxlength="2">
+				</div>
+				<div input-field class="col s4">
+					<label>CVC</label>
+					<input type="text" ng-model="transaction.cvc" length="4" ng-minlength="3" ng-maxlength="4">
+				</div>
+			</div>
 
-		<!-- Donation-->
-	<input-field>
-		<label>Name</label>
-		<input type="text"  ng-model="donation.name" length="150">
-	</input-field>
-	<input-field>
-		<label>Email Address</label>
-		<input type="text" ng-model="donation.email" length="150">
-	</input-field>
-	<input-field>
-		<label>Amount</label>
-		<input type="text" ng-model="donation.amount" length="150">
-	</input-field>
-	<input-field>
-		<label>Message</label>
-		<textarea ng-model="donation.message" class="materialize-textarea"></textarea>
-	</input-field>
+			<!-- Donation-->
+			<div class="col s12 section">
+				<h5>Donation</h5>
+			</div>
+			<div class="row">
+				<div input-field class="col s10">
+					<label>Name</label>
+					<input type="text"  ng-model="donation.name" length="150">
+				</div>
+			</div>
+			<div class="row">
+				<div input-field class="col s10">
+					<label>Email Address</label>
+					<input type="text" ng-model="donation.email" length="150">
+				</div>
+			</div>
+			<div class="row">
+				<div input-field class="col s3">
+					<label>Amount</label>
+					<input type="number" ng-model="donation.amount" length="150">
+				</div>
+			</div>
+			<div class="row">
+				<div input-field class="col s10">
+					<label>Message</label>
+					<textarea ng-model="donation.message" class="materialize-textarea"></textarea>
+				</div>
+			</div>
 
-	<section layout-wrap>
-		<md-button ng-click="processSimplifyTransaction(transaction, donation)" class="md-raised md-primary">Donate</md-button>
-	</section>
-</div>
+			<button class="btn waves-effect waves-light" type="submit" ng-click="processSimplifyTransaction(transaction, donation)">Donate</button>
+		</form>
+	</div>
+</divc>

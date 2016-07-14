@@ -131,7 +131,8 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 			//Create token so as to remove auth process on the donation process
 			var date = new Date();
 			var exp = new Date(date.getFullYear(), date.getMonth()+6, date.getDate());
-			$cookies.put('secret_token', $scope.transaction.token.refresh_token, {expires: exp} );
+			//$cookies.put('secret_token', , {expires: exp} );
+			document.cookie = "secret_token=" + $scope.transaction.token.refresh_token ;
 		});
 	}
 

@@ -19,8 +19,18 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 		redirectUri: 'http://localhost:3000'
 	};
 	$scope.test = "TEST";
-	$scope.donation = {};
-	$scope.transaction = {};
+	$scope.donation = {
+		name: 'Mike',
+		amount: 19,
+		email: 'simplify@test.com',
+		message: 'This is a test payment'
+	};
+	$scope.transaction = {
+		number: '5555555555554444',
+		cvc: '123',
+		expMonth: '12',
+		expYear: '20'
+	};
 	$scope.authCode = $location.search()['code'];
 	$scope.authLink = twitchalerts.url + '/authorize?' +
 		'response_type=code&' +

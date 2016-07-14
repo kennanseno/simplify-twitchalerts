@@ -27,8 +27,6 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngMaterial', 'ngCooki
 		'redirect_uri=' + twitchalerts.redirectUri + '&' +
 		'scope=donations.create';
 
-
-
 	/**
 	 * Initialize App
 	 */

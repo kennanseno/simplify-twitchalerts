@@ -1,30 +1,30 @@
 
 <div id="page-top">
 
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="background-color:white;">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" href="#page-top">Twitchify</a>
+			<a class="navbar-brand page-scroll" href="#page-top" style="color:#26a69a;">Twitchify</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a class="page-scroll" href="#about">About</a>
+					<a class="page-scroll" href="#about" style="color:#26a69a;">About</a>
 				</li>
 				<li>
-					<a class="page-scroll" href="#donate">Donate</a>
+					<a class="page-scroll" href="#donate" style="color:#26a69a;">Donate</a>
 				</li>
 				<li>
-					<a class="page-scroll" href="#portfolio">Why Donate?</a>
+					<a class="page-scroll" href="#portfolio" style="color:#26a69a;">Why Donate?</a>
 				</li>
 				<li>
-					<a class="page-scroll" href="#contact">Contact</a>
+					<a class="page-scroll" href="#contact" style="color:#26a69a;">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -34,14 +34,16 @@
 </nav>
 
 
-<section class="bg-primary" id="about">
+
+
+<section class="bg-primary" id="about" style="background: url('../../resources/img/portfolio/fullsize/header_background.jpg') no-repeat center center fixed; background-size: cover; color: white; padding: 150px 0;">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 text-center">
-				<h2 class="section-heading">Donate using Simplify</h2>
+				<h2 class="section-heading">Support Carnictis <br> <span style="font-size:32px">Greatest gamer alive!</span></h2>
 				<hr class="light">
-				<p class="text-faded">
-					With Simplify, Streamers becomes a business and allows them to have full control on all their transactions.
+				<p class="text-faded" style="color: #EEE;margin-top:-10px">
+					Help keep the stream going by donating! More donation would mean more content daily.
 				</p>
 				<a href="#donate" class="page-scroll btn btn-default btn-xl sr-button">Donate Now</a>
 			</div>
@@ -54,6 +56,7 @@
 		<div class="row">
 			<div class="col-lg-12 text-center">
 				<h2 class="section-heading">Donate Now</h2>
+				<p style="color:#777">Securely donate in a simple fashion using Simplify.</p>
 				<hr class="primary">
 			</div>
 		</div>
@@ -100,7 +103,7 @@
 				</div>
 				<div class="row">
 					<div input-field class="col s4">
-						<label>Amount</label>
+						<label>Amount ($)</label>
 						<input type="number" ng-model="donation.amount" length="50" maxlength="50">
 					</div>
 				</div>
@@ -111,9 +114,13 @@
 					</div>
 				</div>
 				<div class="row">
-					<a class="page-scroll btn btn-default btn-xl sr-button right" ng-click="processSimplifyTransaction(transaction, donation)">Donate</a>
+					<a class="page-scroll btn btn-default btn-xl sr-button right" ng-click="processSimplifyTransaction(transaction, donation)" ng-disabled="saving">Donate</a>
 				</div>
 		</div>
+		<div class="progress" ng-show="saving">
+	      <div class="indeterminate"></div>
+	  </div>
+		<h2 id="success" style="display: none;">Thanks :) You're awesome.</h2>
 	</div>
 </section>
 

@@ -16,14 +16,14 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 	var secret_token = $cookies.get('secret_token');
 	var twitchalerts = {
 		url: 'https://www.twitchalerts.com/api/v1.0',
-		redirectUri: 'http://localhost:3000'
+		redirectUri: 'http://twitchify.xyz'
 	};
 	$scope.test = "TEST";
 	$scope.donation = {
 		name: 'Mike',
 		amount: 19,
 		email: 'simplify@test.com',
-		message: 'This is a test payment'
+		message: 'I love your stream! Keep being awesome! #simplifyrocks'
 	};
 	$scope.transaction = {
 		number: '5555555555554444',
@@ -34,7 +34,7 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 	$scope.authCode = $location.search()['code'];
 	$scope.authLink = twitchalerts.url + '/authorize?' +
 		'response_type=code&' +
-		'client_id=qx0vm0jgb3xPLjl6FR7AKIM9X5GVtEEx9zaDqpuG&' +
+		'client_id=yN6soTt3oyZCmqAyz5ulogTkUcvsDkQUJi875ht8&' +
 		'redirect_uri=' + twitchalerts.redirectUri + '&' +
 		'scope=donations.create';
 
@@ -142,6 +142,8 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 	 * @param transaction
 	 */
 	$scope.processSimplifyTransaction= function(transaction, donation_data) {
+		$scope.saving = true;
+
 		$http({
 			url: '/processTransaction',
 			method: 'GET',
@@ -155,10 +157,15 @@ angular.module('mostPopularListingsApp.home', ['ngRoute', 'ngCookies'])
 				currency: 'USD'
 			}
 		}).then(function success(response) {
+			$scope.saving = false;
+			
 			console.log('Payment status: ' + response.data);
 			if(response.data == 'APPROVED'){
 				processDonation(donation_data, $scope.transaction.token);
 			}
+
+			$('#success').fadeIn();
+
 		});
 	};
 }]);
